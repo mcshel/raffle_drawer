@@ -1,0 +1,11 @@
+{
+  "name": "Heist",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "license": "MIT",
+  "dependencies": {
+    "csv-parser": "^3.0.0",
+    "random": "^4.1.0"
+  }
+}
