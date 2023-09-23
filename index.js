@@ -4,8 +4,8 @@ import random from 'random';
 
 const REWARDS = 20; // Total number of rewards
 
-const A = 10; // Mapping parameter #1
-const B = 1;  // Mapping parameter #2
+const A = 5; // Mapping parameter #1
+const B = 1.1;  // Mapping parameter #2
 
 
 async function readData(path) {
