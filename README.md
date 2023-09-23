@@ -22,11 +22,13 @@ For simulating the general $\sigma(x| A, B)$ check the Jupyter notebook `stdev.i
 
 The script will read the data provided in `data.csv` (you will have to keep the structure of data as in the provided example). The ouput of the script will be an array of objects with the following structure: 
 
-``{
+```
+{
     wallet: string      // Wallet address of the user
     tickets: number     // Number of tickets purchased
     rewards: number     // Number of winning tickets
     delta: number       // The difference between actual winning tickets and the expected number
-}``
+}
+```
 
 A sensible choice for mapping parameters is $A \sim 5$ and $1 \lesssim B \lesssim 1.5$.
