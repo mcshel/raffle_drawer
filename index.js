@@ -1,11 +1,12 @@
 import fs from 'fs';
 import csv from 'csv-parser';
+import { createObjectCsvWriter } from 'csv-writer'
 import random from 'random';
 
-const REWARDS = 20; // Total number of rewards
+const REWARDS = 400; // Total number of rewards
 
 const A = 5; // Mapping parameter #1
-const B = 1.1;  // Mapping parameter #2
+const B = 1;  // Mapping parameter #2
 
 
 async function readData(path) {
@@ -69,7 +70,9 @@ function drawRewards(data, rewards) {
         // console.log(t * p, r);
 
         entrant["rewards"] = r;
-        entrant["delta"] = r / (t * p) - 1;
+        entrant["ev"] = t * p;
+        entrant["delta"] = r - (t * p);
+        entrant["delta_rel"] = r / (t * p) - 1;
         awarded += r;
     }
 
@@ -96,6 +99,27 @@ function drawRewards(data, rewards) {
     console.log(awarded, awarded2);
 
     return data;
+}
+
+
+// Write array of objects to csv file
+async function writeData(data, path) {
+    return new Promise((resolve) => {
+        const csvWriter = createObjectCsvWriter({
+            path: path,
+            header: [
+                { id: 'wallet', title: 'Wallet' },
+                { id: 'tickets', title: 'Tickets' },
+                { id: 'rewards', title: 'Rewards' },
+                { id: 'ev', title: 'EV'},
+                { id: 'delta', title: 'Delta' },
+                { id: 'delta_rel', title: 'Delta rel' }
+            ]
+        });
+        csvWriter.writeRecords(data).then(() => {
+            resolve();
+        });
+    });
 }
 
 
@@ -141,7 +165,11 @@ async function main() {
 
     // Determines the number of rewards that each entrant will receive
     const rewards = drawRewards(entrants, REWARDS);
-    console.log(rewards);
+    // console.log(rewards);
+
+    // Writes the results to a .csv file
+    await writeData(rewards, "rewards.csv");
+
 }
 
 main();
